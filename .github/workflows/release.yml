@@ -1,0 +1,40 @@
+name: 🚀 Release SmartHomeApp
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout del código
+        uses: actions/checkout@v3
+
+      - name: ☕ Configurar Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: 🛠️ Compilar proyecto
+        run: mvn clean install -B
+
+      - name: 📦 Preparar artefacto
+        run: mkdir artifacts && cp target/*.jar artifacts/
+
+      - name: 🚀 Crear release y subir JAR
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "SmartHomeApp Release ${{ github.ref_name }}"
+          tag_name: ${{ github.ref_name }}
+          body: |
+            🎉 ¡Nueva versión de SmartHomeApp!
+            ✅ Compilación automatizada con GitHub Actions.
+            🧪 Incluye pruebas automatizadas con JUnit 5.
+            📦 Descarga el archivo .jar abajo 👇
+          files: artifacts/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

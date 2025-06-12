@@ -25,3 +25,9 @@ jobs:
 
       - name: 📦 Mostrar versión de Maven
         run: mvn -version
+
+      - name: 📦 Subir artefacto compilado
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmartHomeApp
+          path: target/*.jar
