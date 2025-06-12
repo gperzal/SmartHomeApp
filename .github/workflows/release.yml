@@ -25,16 +25,15 @@ jobs:
       - name: 📦 Preparar artefacto
         run: mkdir artifacts && cp target/*.jar artifacts/
 
-      - name: 🚀 Crear release y subir JAR
+      - name: 🚀 Crear Release y subir .jar
         uses: softprops/action-gh-release@v1
         with:
-          name: "SmartHomeApp Release ${{ github.ref_name }}"
+          name: "SmartHomeApp ${{ github.ref_name }}"
           tag_name: ${{ github.ref_name }}
           body: |
-            🎉 ¡Nueva versión de SmartHomeApp!
-            ✅ Compilación automatizada con GitHub Actions.
-            🧪 Incluye pruebas automatizadas con JUnit 5.
-            📦 Descarga el archivo .jar abajo 👇
+            🚀 SmartHomeApp versión ${{ github.ref_name }}
+            ✅ Compilado automáticamente por GitHub Actions.
+            📎 Incluye archivo .jar descargable abajo 👇
           files: artifacts/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
